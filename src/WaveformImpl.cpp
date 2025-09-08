@@ -81,7 +81,16 @@ WaveformImpl::WaveformImpl( std::shared_ptr<DeviceImpl> device, Waveform::Type _
             ma_node* outputNode = ma_node_graph_get_endpoint( nodeGraph );
             result              = ma_node_attach_output_bus( &node, 0, outputNode, 0 );
 
-            if ( result != MA_SUCCESS )
+            if ( result == MA_SUCCESS )
+            {
+                result = ma_node_set_state( &node, ma_node_state_stopped );
+
+                if ( result != MA_SUCCESS )
+                {
+                    std::cerr << "Failed to set set node state to stopped." << std::endl;
+                }
+            }
+            else
             {
                 std::cerr << "Failed to attach waveform source node to endpoint node." << std::endl;
             }
