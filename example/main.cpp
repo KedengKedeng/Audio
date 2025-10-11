@@ -24,6 +24,7 @@ enum class State
     MarioCoin,
     Wait,
     NarratorPart3,
+    FadeOut,
     Done
 };
 
@@ -42,6 +43,7 @@ int main( int argc, char* argv[] )
         }
     }
 
+    Audio::Sound    background { "Rondo_Alla_Turka.ogg", Audio::Sound::Type::Stream };
     Audio::Sound    narrator { "narrator.flac", Audio::Sound::Type::Stream };
     Audio::Waveform waveform { Audio::Waveform::Type::Sine, 0.2f };
     MarioCoin       marioCoin;
@@ -50,6 +52,10 @@ int main( int argc, char* argv[] )
     double                   totalTime = 0.0;
 
     State state = State::NarratorPart1;
+
+    background.setLooping( true );
+    background.setVolume( 0.2f );
+    background.play();
 
     std::cout << "Hello, and welcome to the Audio library.\n";
     std::cout << "In a few seconds, you will hear a waveform audio sample that tests the human audible range between 20 to 20,000 Hz" << std::endl;
@@ -71,6 +77,7 @@ int main( int argc, char* argv[] )
             {
                 totalTime = 0.0;
                 narrator.pause();
+                background.setFade( 0.0f, 500 );
                 state = State::Waveform;
             }
             break;
@@ -87,6 +94,7 @@ int main( int argc, char* argv[] )
             {
                 totalTime = 0.0;
                 waveform.stop();
+                background.setFade( 1.0f, 500 );
                 state = State::NarratorPart2;
 
                 std::cout << "\nWaveforms can also be used to create sound effects for use in popular retro video games.\nPerhaps you will recognize this sound effect." << std::endl;
@@ -99,6 +107,7 @@ int main( int argc, char* argv[] )
             {
                 totalTime = 0.0;
                 narrator.pause();
+                background.setFade( 0.0f, 500 );
                 state = State::MarioCoin;
             }
             break;
@@ -112,7 +121,7 @@ int main( int argc, char* argv[] )
             {
                 totalTime = 0.0;
                 state     = State::NarratorPart3;
-
+                background.setFade( 1.0f, 500 );
                 std::cout << "\nThanks for listening." << std::endl;
             }
             break;
@@ -120,7 +129,15 @@ int main( int argc, char* argv[] )
             narrator.play();
             if ( totalTime > 1.5 )
             {
+                background.setFade( 0.0f, 1000 );
                 narrator.stop();
+                totalTime = 0.0f;
+                state = State::FadeOut;
+            }
+            break;
+        case State::FadeOut:
+            if (totalTime > 1.0 )
+            {
                 state = State::Done;
             }
             break;
