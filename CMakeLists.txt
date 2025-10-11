@@ -60,7 +60,9 @@ set_target_properties( Audio
 )
 
 target_include_directories( Audio
-    PUBLIC inc
+    PUBLIC 
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/inc>
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
 )
 
 if(BUILD_SHARED_LIBS)
@@ -77,3 +79,50 @@ if( AUDIO_BUILD_EXAMPLES )
         VS_STARTUP_PROJECT example
 	)
 endif( AUDIO_BUILD_EXAMPLES)
+
+# Install configuration
+include(GNUInstallDirs)
+include(CMakePackageConfigHelpers)
+
+# Install the library
+install(TARGETS Audio
+    EXPORT AudioTargets
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+    INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+)
+
+# Install headers
+install(DIRECTORY inc/Audio
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+    FILES_MATCHING PATTERN "*.hpp"
+)
+
+# Install export targets
+install(EXPORT AudioTargets
+    FILE AudioTargets.cmake
+    NAMESPACE Audio::
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/Audio
+)
+
+# Create version file
+write_basic_package_version_file(
+    AudioConfigVersion.cmake
+    VERSION 1.0.0
+    COMPATIBILITY SameMajorVersion
+)
+
+# Create config file
+configure_package_config_file(
+    ${CMAKE_CURRENT_SOURCE_DIR}/cmake/AudioConfig.cmake.in
+    ${CMAKE_CURRENT_BINARY_DIR}/AudioConfig.cmake
+    INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/Audio
+)
+
+# Install config files
+install(FILES
+    ${CMAKE_CURRENT_BINARY_DIR}/AudioConfig.cmake
+    ${CMAKE_CURRENT_BINARY_DIR}/AudioConfigVersion.cmake
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/Audio
+)
