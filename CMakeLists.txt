@@ -109,7 +109,7 @@ install(EXPORT AudioTargets
 # Create version file
 write_basic_package_version_file(
     AudioConfigVersion.cmake
-    VERSION 1.0.0
+    VERSION 1.0.1
     COMPATIBILITY SameMajorVersion
 )
 
