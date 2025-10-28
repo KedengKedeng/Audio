@@ -198,7 +198,7 @@ void Sound::setCone( float innerAngle, float outerAngle, float outerGain )
 
 void Sound::getCone( float& innerAngle, float& outerAngle, float& outerGain ) const
 {
-    impl->getCone( innerAngle, outerGain, outerGain );
+    impl->getCone( innerAngle, outerAngle, outerGain );
 }
 
 void Sound::setAttenuationModel( AttenuationModel attenuation )
