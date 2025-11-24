@@ -2,6 +2,23 @@
     "version": 3,
     "configurePresets": [
         {
+            "name": "vs18",
+            "displayName": "Visual Studio 2026",
+            "description": "Generator for Visual Studio 2026",
+            "generator": "Visual Studio 18 2026",
+            "binaryDir": "${sourceDir}/out/build/${presetName}",
+            "installDir": "${sourceDir}/out/install/${presetName}",
+            "architecture": {
+                "value": "x64",
+                "strategy": "set"
+            },
+            "vendor": {
+                "microsoft.com/VisualStudioSettings/CMake/1.0": {
+                    "hostOS": "Windows"
+                }
+            }
+        },
+        {
             "name": "vs17",
             "displayName": "Visual Studio 2022",
             "description": "Generator for Visual Studio 2022",
@@ -57,6 +74,20 @@
             "displayName": "Ninja Release",
             "description": "Release build using Ninja",
             "configurePreset": "ninja",
+            "configuration": "Release"
+        },
+        {
+            "name": "vs18-debug",
+            "displayName": "Visual Studio 2026 Debug",
+            "description": "Debug build using Visual Studio 2026",
+            "configurePreset": "vs18",
+            "configuration": "Debug"
+        },
+        {
+            "name": "vs18-release",
+            "displayName": "Visual Studio 2026 Release",
+            "description": "Release build using Visual Studio 2026",
+            "configurePreset": "vs18",
             "configuration": "Release"
         },
         {

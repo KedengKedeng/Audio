@@ -56,7 +56,6 @@ add_library( Audio::Audio ALIAS Audio )
 set_target_properties( Audio
     PROPERTIES
         CXX_STANDARD 17
-        DEBUG_POSTFIX _d
 )
 
 target_include_directories( Audio
