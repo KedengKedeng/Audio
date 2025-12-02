@@ -1,4 +1,4 @@
-cmake_minimum_required( VERSION 3.22.1 )
+cmake_minimum_required( VERSION 4.0...4.2 )
 
 add_executable( example main.cpp MarioCoin.hpp MarioCoin.cpp )
 
@@ -6,16 +6,9 @@ target_link_libraries( example
     PRIVATE Audio
 )
 
-set_target_properties( example
+target_compile_features( example PUBLIC cxx_std_20 )
+
+set_target_properties( example 
     PROPERTIES
-        CXX_STANDARD 20
+        DEBUGGER_WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
 )
-
-# Set the startup project.
-set_directory_properties( PROPERTIES
-    VS_STARTUP_PROJECT example
-)
-
-# Set Local Debugger Settings (Command Arguments and Environment Variables)
-set( COMMAND_ARGUMENTS "-cwd \"${CMAKE_CURRENT_SOURCE_DIR}\"" )
-configure_file( DebugSettings.vcxproj.user.in ${CMAKE_CURRENT_BINARY_DIR}/example.vcxproj.user @ONLY )
