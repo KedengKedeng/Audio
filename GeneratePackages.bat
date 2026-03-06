@@ -2,32 +2,24 @@
 setlocal
 
 set PRESETS=vs17 vs18
-set VARIANTS=. shared
+set VARIANTS=static shared
 
 for %%p in (%PRESETS%) do (
     for %%v in (%VARIANTS%) do (
-        if "%%v"=="." (
-            set "SUFFIX="
-            set "LABEL=Static"
-        ) else (
-            set "SUFFIX=-%%v"
-            set "LABEL=%%v"
-        )
-
-        call echo === Configuring %%p ^(%%LABEL%%^) ===
-        call cmake --preset %%p%%SUFFIX%%
+        call echo === Configuring %%p ^(%%v^) ===
+        call cmake --preset %%p-%%v
         if errorlevel 1 goto :error
 
-        call echo === Building %%p %%LABEL%% Debug ===
-        call cmake --build --preset %%p%%SUFFIX%%-debug
+        call echo === Building %%p %%v Debug ===
+        call cmake --build --preset %%p-%%v-debug
         if errorlevel 1 goto :error
 
-        call echo === Building %%p %%LABEL%% Release ===
-        call cmake --build --preset %%p%%SUFFIX%%-release
+        call echo === Building %%p %%v Release ===
+        call cmake --build --preset %%p-%%v-release
         if errorlevel 1 goto :error
 
-        call echo === Packaging %%p %%LABEL%% ===
-        call cpack --preset %%p%%SUFFIX%%-zip
+        call echo === Packaging %%p %%v ===
+        call cpack --preset %%p-%%v-zip
         if errorlevel 1 goto :error
     )
 )

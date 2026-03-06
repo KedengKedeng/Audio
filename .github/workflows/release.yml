@@ -15,38 +15,25 @@ jobs:
     strategy:
       matrix:
         preset: [vs17]
+        variant: [static, shared]
 
     steps:
       - uses: actions/checkout@v4
 
-      - name: Configure (Static)
-        run: cmake --preset ${{ matrix.preset }}
+      - name: Configure
+        run: cmake --preset ${{ matrix.preset }}-${{ matrix.variant }}
 
-      - name: Build Static Debug
-        run: cmake --build --preset ${{ matrix.preset }}-debug
+      - name: Build Debug
+        run: cmake --build --preset ${{ matrix.preset }}-${{ matrix.variant }}-debug
 
-      - name: Build Static Release
-        run: cmake --build --preset ${{ matrix.preset }}-release
+      - name: Build Release
+        run: cmake --build --preset ${{ matrix.preset }}-${{ matrix.variant }}-release
 
-      - name: Package Static
-        run: cpack --preset ${{ matrix.preset }}-zip
-
-      - name: Configure (Shared)
-        run: cmake --preset ${{ matrix.preset }}-shared
-
-      - name: Build Shared Debug
-        run: cmake --build --preset ${{ matrix.preset }}-shared-debug
-
-      - name: Build Shared Release
-        run: cmake --build --preset ${{ matrix.preset }}-shared-release
-
-      - name: Package Shared
-        run: cpack --preset ${{ matrix.preset }}-shared-zip
+      - name: Package
+        run: cpack --preset ${{ matrix.preset }}-${{ matrix.variant }}-zip
 
       - name: Upload Release
         if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v2
         with:
-          files: |
-            out/build/${{ matrix.preset }}/*.zip
-            out/build/${{ matrix.preset }}-shared/*.zip
+          files: out/build/${{ matrix.preset }}-${{ matrix.variant }}/*.zip
