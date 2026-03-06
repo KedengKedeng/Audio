@@ -11,7 +11,7 @@ jobs:
     runs-on: windows-latest
     strategy:
       matrix:
-        preset: [vs17, vs18]
+        preset: [vs17]
 
     steps:
       - uses: actions/checkout@v4
