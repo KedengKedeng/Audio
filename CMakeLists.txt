@@ -6,6 +6,7 @@ set( AUDIO_VERSION_PATCH 2 )
 set( AUDIO_VERSION "${AUDIO_VERSION_MAJOR}.${AUDIO_VERSION_MINOR}.${AUDIO_VERSION_PATCH}" )
 
 option( AUDIO_BUILD_EXAMPLES "Include the example projects." OFF )
+option( AUDIO_INSTALL_CONFIG_SUBDIRS "Install libraries into per-configuration subdirectories." ON )
 option( BUILD_SHARED_LIBS "Build Audio library as a shared library (DLL)." OFF )
 
 # Use solution folders in Visual Studio.
@@ -89,11 +90,19 @@ include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
 
 # Install the library
+if(AUDIO_INSTALL_CONFIG_SUBDIRS)
+    set(AUDIO_LIB_DEST ${CMAKE_INSTALL_LIBDIR}/$<CONFIG>)
+    set(AUDIO_BIN_DEST ${CMAKE_INSTALL_BINDIR}/$<CONFIG>)
+else()
+    set(AUDIO_LIB_DEST ${CMAKE_INSTALL_LIBDIR})
+    set(AUDIO_BIN_DEST ${CMAKE_INSTALL_BINDIR})
+endif()
+
 install(TARGETS Audio
     EXPORT AudioTargets
-    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}/$<CONFIG>
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}/$<CONFIG>
-    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}/$<CONFIG>
+    ARCHIVE DESTINATION ${AUDIO_LIB_DEST}
+    LIBRARY DESTINATION ${AUDIO_LIB_DEST}
+    RUNTIME DESTINATION ${AUDIO_BIN_DEST}
     INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
 )
 
