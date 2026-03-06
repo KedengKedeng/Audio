@@ -96,7 +96,82 @@ The example project should run directly from Visual Studio, but the example trie
 
 If you see `Failed to initialize sound from source: narrator.flac` printed to the console, then the wrong working directory is being used to run the example. In this case, you will still hear the waveforms (since they don't rely on loading any files from disk), but you won't hear the narrator audio file.
 
-## Integrating Into Your Own Project
+## Using Prebuilt Packages
+
+Prebuilt packages are available on the [Releases](https://github.com/3dgep/Audio/releases) page. Download the ZIP that matches your compiler and configuration:
+
+* `Audio-<version>-<platform>-<compiler>-static.zip` — static library (`.lib`)
+* `Audio-<version>-<platform>-<compiler>-shared.zip` — shared library (`.dll` + import `.lib`)
+
+Each package contains both Debug and Release binaries:
+
+```txt
+├── include
+│   └── Audio
+│       ├── Config.hpp
+│       ├── Device.hpp
+│       ├── Listener.hpp
+│       ├── Sound.hpp
+│       ├── Vector.hpp
+│       └── Waveform.hpp
+├── lib
+│   ├── Debug
+│   │   └── Audio.lib
+│   ├── Release
+│   │   └── Audio.lib
+│   └── cmake
+│       └── Audio
+│           ├── AudioConfig.cmake
+│           ├── AudioConfigVersion.cmake
+│           └── AudioTargets.cmake
+```
+
+Shared packages additionally contain:
+
+```txt
+├── bin
+│   ├── Debug
+│   │   └── Audio.dll
+│   └── Release
+│       └── Audio.dll
+```
+
+### Using with CMake (Recommended)
+
+Extract the package and use `find_package` to integrate it into your CMake project:
+
+```cmake
+# Point CMake to the extracted package
+list(APPEND CMAKE_PREFIX_PATH "path/to/Audio-<version>-<platform>-<compiler>-static")
+
+find_package(Audio REQUIRED)
+
+add_executable(MyApp main.cpp)
+target_link_libraries(MyApp PRIVATE Audio::Audio)
+```
+
+CMake will automatically set up include paths and link the correct library for your build configuration.
+
+### Using with FetchContent
+
+You can also pull the library directly from GitHub without downloading a package:
+
+```cmake
+include(FetchContent)
+
+FetchContent_Declare(
+    Audio
+    GIT_REPOSITORY https://github.com/3dgep/Audio.git
+    GIT_TAG        v1.0.2
+)
+
+FetchContent_MakeAvailable(Audio)
+
+add_executable(MyApp main.cpp)
+target_link_libraries(MyApp PRIVATE Audio::Audio)
+```
+
+## Integrating Into Your Own Project (Manual)
 
 To use the Audio library in your own projects, copy the `lib` and `inc` folders to a folder in your own project. For example, suppose you keep your 3rd party files in a folder called `extern` or `3rdParty`.
 
