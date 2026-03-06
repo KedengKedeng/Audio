@@ -1,5 +1,5 @@
 {
-    "version": 3,
+    "version": 6,
     "configurePresets": [
         {
             "name": "vs18",
@@ -24,6 +24,33 @@
             "generator": "Ninja Multi-Config",
             "binaryDir": "${sourceDir}/out/build/${presetName}",
             "installDir": "${sourceDir}/out/install/${presetName}"
+        },
+        {
+            "name": "vs18-shared",
+            "displayName": "Visual Studio 2026 (Shared)",
+            "description": "Generator for Visual Studio 2026 with shared libraries",
+            "inherits": "vs18",
+            "cacheVariables": {
+                "BUILD_SHARED_LIBS": "ON"
+            }
+        },
+        {
+            "name": "vs17-shared",
+            "displayName": "Visual Studio 2022 (Shared)",
+            "description": "Generator for Visual Studio 2022 with shared libraries",
+            "inherits": "vs17",
+            "cacheVariables": {
+                "BUILD_SHARED_LIBS": "ON"
+            }
+        },
+        {
+            "name": "ninja-shared",
+            "displayName": "Ninja (Shared)",
+            "description": "Generator for Ninja build system with shared libraries",
+            "inherits": "ninja",
+            "cacheVariables": {
+                "BUILD_SHARED_LIBS": "ON"
+            }
         }
     ],
     "buildPresets": [
@@ -68,6 +95,92 @@
             "description": "Release build using Visual Studio 2022",
             "configurePreset": "vs17",
             "configuration": "Release"
+        },
+        {
+            "name": "ninja-shared-debug",
+            "displayName": "Ninja Shared Debug",
+            "description": "Debug build using Ninja (shared)",
+            "configurePreset": "ninja-shared",
+            "configuration": "Debug"
+        },
+        {
+            "name": "ninja-shared-release",
+            "displayName": "Ninja Shared Release",
+            "description": "Release build using Ninja (shared)",
+            "configurePreset": "ninja-shared",
+            "configuration": "Release"
+        },
+        {
+            "name": "vs18-shared-debug",
+            "displayName": "Visual Studio 2026 Shared Debug",
+            "description": "Debug build using Visual Studio 2026 (shared)",
+            "configurePreset": "vs18-shared",
+            "configuration": "Debug"
+        },
+        {
+            "name": "vs18-shared-release",
+            "displayName": "Visual Studio 2026 Shared Release",
+            "description": "Release build using Visual Studio 2026 (shared)",
+            "configurePreset": "vs18-shared",
+            "configuration": "Release"
+        },
+        {
+            "name": "vs17-shared-debug",
+            "displayName": "Visual Studio 2022 Shared Debug",
+            "description": "Debug build using Visual Studio 2022 (shared)",
+            "configurePreset": "vs17-shared",
+            "configuration": "Debug"
+        },
+        {
+            "name": "vs17-shared-release",
+            "displayName": "Visual Studio 2022 Shared Release",
+            "description": "Release build using Visual Studio 2022 (shared)",
+            "configurePreset": "vs17-shared",
+            "configuration": "Release"
+        }
+    ],
+    "packagePresets": [
+        {
+            "name": "vs18-zip",
+            "displayName": "Visual Studio 2026 ZIP",
+            "configurePreset": "vs18",
+            "generators": ["ZIP"],
+            "configurations": ["Debug", "Release"]
+        },
+        {
+            "name": "vs17-zip",
+            "displayName": "Visual Studio 2022 ZIP",
+            "configurePreset": "vs17",
+            "generators": ["ZIP"],
+            "configurations": ["Debug", "Release"]
+        },
+        {
+            "name": "ninja-zip",
+            "displayName": "Ninja ZIP",
+            "configurePreset": "ninja",
+            "generators": ["ZIP"],
+            "configurations": ["Debug", "Release"]
+        },
+        {
+            "name": "vs18-shared-zip",
+            "displayName": "Visual Studio 2026 Shared ZIP",
+            "configurePreset": "vs18-shared",
+            "generators": ["ZIP"],
+            "configurations": ["Debug", "Release"]
+        },
+        {
+            "name": "vs17-shared-zip",
+            "displayName": "Visual Studio 2022 Shared ZIP",
+            "configurePreset": "vs17-shared",
+            "generators": ["ZIP"],
+            "configurations": ["Debug", "Release"]
+        },
+        {
+            "name": "ninja-shared-zip",
+            "displayName": "Ninja Shared ZIP",
+            "configurePreset": "ninja-shared",
+            "generators": ["ZIP"],
+            "configurations": ["Debug", "Release"]
         }
     ]
 }

@@ -1,12 +1,17 @@
 cmake_minimum_required( VERSION 3.22.1 )
 
-option( AUDIO_BUILD_EXAMPLES "Include the example projects." ON )
+set( AUDIO_VERSION_MAJOR 1 )
+set( AUDIO_VERSION_MINOR 0 )
+set( AUDIO_VERSION_PATCH 1 )
+set( AUDIO_VERSION "${AUDIO_VERSION_MAJOR}.${AUDIO_VERSION_MINOR}.${AUDIO_VERSION_PATCH}" )
+
+option( AUDIO_BUILD_EXAMPLES "Include the example projects." OFF )
 option( BUILD_SHARED_LIBS "Build Audio library as a shared library (DLL)." OFF )
 
 # Use solution folders in Visual Studio.
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
-project( Audio LANGUAGES C CXX )
+project( Audio VERSION ${AUDIO_VERSION} LANGUAGES C CXX )
 
 if( CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
     # Make sure DLL and EXE targets go to the same directory.
@@ -108,7 +113,7 @@ install(EXPORT AudioTargets
 # Create version file
 write_basic_package_version_file(
     AudioConfigVersion.cmake
-    VERSION 1.0.1
+    VERSION ${AUDIO_VERSION}
     COMPATIBILITY SameMajorVersion
 )
 
@@ -125,3 +130,20 @@ install(FILES
     ${CMAKE_CURRENT_BINARY_DIR}/AudioConfigVersion.cmake
     DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/Audio
 )
+
+# Packaging configuration
+set(CPACK_PACKAGE_NAME "Audio")
+set(CPACK_PACKAGE_VERSION "${AUDIO_VERSION}")
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Audio library")
+set(CPACK_PACKAGE_VENDOR "3dgep")
+set(CPACK_PACKAGE_INSTALL_DIRECTORY "Audio")
+
+if(BUILD_SHARED_LIBS)
+    set(AUDIO_LIB_TYPE "shared")
+else()
+    set(AUDIO_LIB_TYPE "static")
+endif()
+
+set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION}-${CPACK_SYSTEM_NAME}-${AUDIO_LIB_TYPE}")
+
+include(CPack)
