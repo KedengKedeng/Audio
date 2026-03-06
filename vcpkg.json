@@ -3,6 +3,5 @@
     "version": "1.0.2",
     "description": "A minimalistic C++ audio library built on miniaudio.",
     "homepage": "https://github.com/3dgep/Audio",
-    "license": "MIT",
-    "supports": "windows"
+    "license": "Unlicense"
 }
