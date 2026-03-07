@@ -4,6 +4,7 @@
 #include <Audio/Waveform.hpp>
 
 #include <chrono>
+#include <cmath>
 #include <cstring>
 #include <future>
 #include <iostream>
@@ -131,11 +132,11 @@ int main( int argc, char* argv[] )
                 background.setFade( 0.0f, 1000 );
                 narrator.stop();
                 totalTime = 0.0f;
-                state = State::FadeOut;
+                state     = State::FadeOut;
             }
             break;
         case State::FadeOut:
-            if (totalTime > 1.0 )
+            if ( totalTime > 1.0 )
             {
                 state = State::Done;
             }

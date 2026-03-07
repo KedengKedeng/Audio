@@ -117,9 +117,3 @@ private:
     std::shared_ptr<ListenerImpl> impl;
 };
 }  // namespace Audio
-
-namespace std
-{
-// Export DLL API to suppress warnings.
-AUDIO_EXTERN template class AUDIO_API shared_ptr<Audio::ListenerImpl>;
-}  // namespace std

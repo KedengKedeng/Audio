@@ -431,9 +431,3 @@ void Sound::setStopTime( const std::chrono::duration<Rep, Period>& duration )
 }
 
 }  // namespace Audio
-
-namespace std
-{
-// Export DLL API to suppress warnings.
-AUDIO_EXTERN template class AUDIO_API shared_ptr<Audio::SoundImpl>;
-}  // namespace std

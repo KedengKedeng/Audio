@@ -144,9 +144,3 @@ private:
 };
 
 }  // namespace Audio
-
-namespace std
-{
-// Export DLL API to suppress warnings.
-AUDIO_EXTERN template class AUDIO_API std::shared_ptr<Audio::WaveformImpl>;
-}  // namespace std
