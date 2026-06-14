@@ -12,18 +12,18 @@ Sound::Sound( Sound&& ) noexcept            = default;
 Sound& Sound::operator=( const Sound& )     = default;
 Sound& Sound::operator=( Sound&& ) noexcept = default;
 
-Sound& Sound::operator=( nullptr_t ) noexcept
+Sound& Sound::operator=( std::nullptr_t ) noexcept
 {
     impl = nullptr;
     return *this;
 }
 
-bool Sound::operator==( nullptr_t ) const noexcept
+bool Sound::operator==( std::nullptr_t ) const noexcept
 {
     return impl == nullptr;
 }
 
-bool Sound::operator!=( nullptr_t ) const noexcept
+bool Sound::operator!=( std::nullptr_t ) const noexcept
 {
     return impl != nullptr;
 }

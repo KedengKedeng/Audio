@@ -2,6 +2,8 @@
 
 #include "Config.hpp"
 
+#include <cstddef>
+#include <cstdint>
 #include <memory>
 
 namespace Audio
@@ -110,13 +112,13 @@ public:
     /// Assigning `nullptr` will release the underlying implementation.
     /// This is the same as using the `reset` function on this object.
     /// </remarks>
-    Waveform& operator=( nullptr_t ) noexcept;
+    Waveform& operator=( std::nullptr_t ) noexcept;
 
     /// <summary>
     /// Allow for null checks.
     /// </summary>
-    bool operator==( nullptr_t ) const noexcept;
-    bool operator!=( nullptr_t ) const noexcept;
+    bool operator==( std::nullptr_t ) const noexcept;
+    bool operator!=( std::nullptr_t ) const noexcept;
 
     /// <summary>
     /// Explicit bool conversion allows to check for a valid object.

@@ -171,30 +171,6 @@ add_executable(MyApp main.cpp)
 target_link_libraries(MyApp PRIVATE Audio::Audio)
 ```
 
-### Using with vcpkg
-
-You can install the Audio library using vcpkg with the overlay port included in this repository:
-
-```bash
-vcpkg install audio --overlay-ports=path/to/Audio/ports
-```
-
-Or add it to your `vcpkg.json` manifest:
-
-```json
-{
-    "dependencies": ["audio"]
-}
-```
-
-Then configure your CMake project with the overlay:
-
-```bash
-cmake -B build -DCMAKE_TOOLCHAIN_FILE=<vcpkg-root>/scripts/buildsystems/vcpkg.cmake -DVCPKG_OVERLAY_PORTS=path/to/Audio/ports
-```
-
-The library is then available via `find_package(Audio)` and `target_link_libraries(... Audio::Audio)`.
-
 ## Integrating Into Your Own Project (Manual)
 
 To use the Audio library in your own projects, copy the `lib` and `inc` folders to a folder in your own project. For example, suppose you keep your 3rd party files in a folder called `extern` or `3rdParty`.

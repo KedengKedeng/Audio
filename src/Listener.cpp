@@ -13,18 +13,18 @@ Listener::Listener( Listener&& ) noexcept            = default;
 Listener::~Listener()                                = default;
 Listener& Listener::operator=( const Listener& )     = default;
 Listener& Listener::operator=( Listener&& ) noexcept = default;
-Listener& Listener::operator=( nullptr_t ) noexcept
+Listener& Listener::operator=( std::nullptr_t ) noexcept
 {
     impl = nullptr;
     return *this;
 }
 
-bool Listener::operator==( nullptr_t ) const noexcept
+bool Listener::operator==( std::nullptr_t ) const noexcept
 {
     return impl == nullptr;
 }
 
-bool Listener::operator!=( nullptr_t ) const noexcept
+bool Listener::operator!=( std::nullptr_t ) const noexcept
 {
     return impl != nullptr;
 }

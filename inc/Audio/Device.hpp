@@ -5,6 +5,7 @@
 #include "Sound.hpp"
 #include "Waveform.hpp"
 
+#include <cstdint>
 #include <filesystem>
 
 namespace Audio
