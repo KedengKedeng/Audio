@@ -77,18 +77,18 @@ void Waveform::reset()
     impl.reset();
 }
 
-Waveform& Waveform::operator=( nullptr_t ) noexcept
+Waveform& Waveform::operator=( std::nullptr_t ) noexcept
 {
     impl = nullptr;
     return *this;
 }
 
-bool Waveform::operator==( nullptr_t ) const noexcept
+bool Waveform::operator==( std::nullptr_t ) const noexcept
 {
     return impl == nullptr;
 }
 
-bool Waveform::operator!=( nullptr_t ) const noexcept
+bool Waveform::operator!=( std::nullptr_t ) const noexcept
 {
     return impl != nullptr;
 }
